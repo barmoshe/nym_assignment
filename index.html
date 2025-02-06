@@ -1,405 +1,471 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nym Assignment Submission</title>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet" />
-  <!-- pdf.js library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
-  <style>
-    /* Base & Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-      font-family: 'Montserrat', sans-serif;
-      background: #1E252F;
-      color: #ffffff;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-      position: relative;
-      z-index: 1;
-    }
-    /* Hero Section */
-    .hero {
-      position: relative;
-      width: 100%;
-      padding: 100px 20px 120px;
-      margin-bottom: 60px;
-      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-      background: linear-gradient(270deg, #00AEEF, #F15A29, #FFD700, #3BA935);
-      background-size: 600% 600%;
-      animation: gradientShift 10s ease infinite;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-      position: relative;
-    }
-    .hero h1::after {
-      content: '';
-      position: absolute;
-      width: 50px;
-      height: 3px;
-      background: #ffffff;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -10px;
-    }
-    .hero p {
-      font-weight: 300;
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 20px auto 40px;
-    }
-    /* Button */
-    .btn {
-      display: inline-block;
-      background: #1E252F;
-      color: #fff;
-      padding: 16px 40px;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 700;
-      position: relative;
-      transition: transform 0.3s ease, background 0.3s ease;
-      overflow: hidden;
-      margin: 5px;
-    }
-    .btn:hover {
-      background: #3BA935;
-      transform: translateY(-3px);
-    }
-    .btn.wow {
-      animation: wowEffect 0.6s ease forwards;
-    }
-    /* Sections */
-    section {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      margin-bottom: 40px;
-      padding: 30px;
-      position: relative;
-      opacity: 0;
-      transform: translateY(15px);
-      animation: fadeUp 0.8s ease forwards;
-    }
-    section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      font-weight: 700;
-      border-bottom: 2px solid rgba(255,255,255,0.2);
-      padding-bottom: 10px;
-    }
-    section p,
-    section ul,
-    section ol {
-      margin-bottom: 16px;
-      font-weight: 300;
-      line-height: 1.8;
-    }
-    section ul li,
-    section ol li {
-      margin-bottom: 6px;
-    }
-    /* Code blocks */
-    pre, code {
-      background: rgba(255, 255, 255, 0.1);
-      font-size: 0.9rem;
-      border-radius: 4px;
-      padding: 12px;
-      margin-bottom: 16px;
-      overflow-x: auto;
-      display: block;
-      line-height: 1.6;
-    }
-    /* Demo Output Box */
-    #demoOutput {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 8px;
-      max-height: 300px;
-      overflow-y: auto;
-      margin-top: 20px;
-    }
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.85rem;
-      background: #2A313A;
-      color: #FFFFFF;
-    }
-    /* Keyframe Animations */
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes wowEffect {
-      0% { transform: translateY(0) scale(1); background: #1E252F; }
-      50% { transform: scale(1.3) rotate(10deg); background: #FFD700; }
-      100% { transform: translateY(-4px) rotate(0deg); background: #3BA935; }
-    }
-    /* Mobile Responsive Styles */
-    @media (max-width: 768px) {
-      .hero { padding: 80px 10px 100px; }
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1rem; margin: 15px auto 30px; }
-      .btn { padding: 12px 30px; font-size: 0.9rem; }
-      .container { padding: 0 10px 40px; }
-      section { padding: 20px; }
-      section h2 { font-size: 1.6rem; }
-    }
-  </style>
-</head>
-<body>
-  <!-- Hero Section -->
-  <div class="hero">
-    <h1>Nym Assignment Submission</h1>
-    <p>PDF Parsing & Chart Population in Python</p>
-    <a href="https://github.com/barmoshe/nym_assignment" id="githubBtn" class="btn">View on GitHub</a>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nym Assignment Submission</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- pdf.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+    <style>
+      /* Base & Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Montserrat", sans-serif;
+        background: #1e252f;
+        color: #ffffff;
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px 60px;
+        position: relative;
+        z-index: 1;
+      }
+      /* Hero Section */
+      .hero {
+        position: relative;
+        width: 100%;
+        padding: 100px 20px 120px;
+        margin-bottom: 60px;
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        background: linear-gradient(270deg, #00aeef, #f15a29, #ffd700, #3ba935);
+        background-size: 600% 600%;
+        animation: gradientShift 10s ease infinite;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+        position: relative;
+      }
+      .hero h1::after {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 3px;
+        background: #ffffff;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -10px;
+      }
+      .hero p {
+        font-weight: 300;
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 20px auto 40px;
+      }
+      /* Button */
+      .btn {
+        display: inline-block;
+        background: #1e252f;
+        color: #fff;
+        padding: 16px 40px;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 700;
+        position: relative;
+        transition: transform 0.3s ease, background 0.3s ease;
+        overflow: hidden;
+        margin: 5px;
+      }
+      .btn:hover {
+        background: #3ba935;
+        transform: translateY(-3px);
+      }
+      .btn.wow {
+        animation: wowEffect 0.6s ease forwards;
+      }
+      /* Sections */
+      section {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        margin-bottom: 40px;
+        padding: 30px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(15px);
+        animation: fadeUp 0.8s ease forwards;
+      }
+      section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 10px;
+      }
+      section p,
+      section ul,
+      section ol {
+        margin-bottom: 16px;
+        font-weight: 300;
+        line-height: 1.8;
+      }
+      section ul li,
+      section ol li {
+        margin-bottom: 6px;
+      }
+      /* Code blocks */
+      pre,
+      code {
+        background: rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        border-radius: 4px;
+        padding: 12px;
+        margin-bottom: 16px;
+        overflow-x: auto;
+        display: block;
+        line-height: 1.6;
+      }
+      /* Demo Output Box */
+      #demoOutput {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 20px;
+      }
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 0.85rem;
+        background: #2a313a;
+        color: #ffffff;
+      }
+      /* Keyframe Animations */
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes wowEffect {
+        0% {
+          transform: translateY(0) scale(1);
+          background: #1e252f;
+        }
+        50% {
+          transform: scale(1.3) rotate(10deg);
+          background: #ffd700;
+        }
+        100% {
+          transform: translateY(-4px) rotate(0deg);
+          background: #3ba935;
+        }
+      }
+      /* Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        .hero {
+          padding: 80px 10px 100px;
+        }
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .hero p {
+          font-size: 1rem;
+          margin: 15px auto 30px;
+        }
+        .btn {
+          padding: 12px 30px;
+          font-size: 0.9rem;
+        }
+        .container {
+          padding: 0 10px 40px;
+        }
+        section {
+          padding: 20px;
+        }
+        section h2 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Nym Assignment Submission</h1>
+      <p>PDF Parsing & Chart Population in Python</p>
+      <a
+        href="https://github.com/barmoshe/nym_assignment"
+        id="githubBtn"
+        class="btn"
+        >View on GitHub</a
+      >
+    </div>
 
-  <div class="container">
-    <!-- Introduction -->
-    <section style="animation-delay: 0.1s;">
-      <h2>Introduction</h2>
-      <p>
-        This package, <code>nym_assignment</code>, demonstrates PDF parsing and chart population using concepts from Python's <code>pdfplumber</code>.
-      </p>
-    </section>
+    <div class="container">
+      <!-- Introduction -->
+      <section style="animation-delay: 0.1s">
+        <h2>Introduction</h2>
+        <p>
+          This package, <code>nym_assignment</code>, demonstrates PDF parsing
+          and chart population using concepts from Python's
+          <code>pdfplumber</code>.
+        </p>
+      </section>
 
-    <!-- Assignment -->
-    <section style="animation-delay: 0.2s;">
-      <h2>Assignment</h2>
-      <p>
-        <strong>pdf_to_dict:</strong> Extracts <code>TextualWord</code> objects from PDFs.<br>
-        <strong>populate_chart:</strong> Builds a <code>Chart</code> object with patient info and calculates age.
-      </p>
-      <pre>
+      <!-- Demo Section -->
+      <section id="demo" style="animation-delay: 0.5s">
+        <h2>Demo(in js)</h2>
+        <p>Select a PDF and run the tasks:</p>
+        <select id="pdfSelect">
+          <option value="chart1.pdf">chart1.pdf</option>
+          <option value="chart2.pdf">chart2.pdf</option>
+          <option value="chart3.pdf">chart3.pdf</option>
+        </select>
+        <br /><br />
+        <button id="btnPdfToDict" class="btn">Run pdf_to_dict</button>
+        <button id="btnPopulateChart" class="btn">Run populate_chart</button>
+        <button id="btnPdfToExtraDict" class="btn">
+          Run pdf_to_extra_dict
+        </button>
+        <div id="demoOutput"></div>
+      </section>
+
+      <!-- Assignment -->
+      <section style="animation-delay: 0.2s">
+        <h2>Assignment</h2>
+        <p>
+          <strong>pdf_to_dict:</strong> Extracts
+          <code>TextualWord</code> objects from PDFs.<br />
+          <strong>populate_chart:</strong> Builds a <code>Chart</code> object
+          with patient info and calculates age.
+        </p>
+        <pre>
 {0: [TextualWord(x0=72.025, x1=95.928, text='First'), ...],
  1: [TextualWord(x0=72.025, x1=111.955, text='Second'), ...]}
-      </pre>
-    </section>
+      </pre
+        >
+      </section>
 
-    <!-- Bonus -->
-    <section style="animation-delay: 0.3s;">
-      <h2>Bonus</h2>
-      <p>
-        <strong>pdf_to_extra_dict:</strong> Extracts font details using <code>ExtraTextualWord</code>.<br>
-        <strong>split_to_sections:</strong> Groups PDF content into sections by bold headings.
-      </p>
-      <pre>
+      <!-- Bonus -->
+      <section style="animation-delay: 0.3s">
+        <h2>Bonus</h2>
+        <p>
+          <strong>pdf_to_extra_dict:</strong> Extracts font details using
+          <code>ExtraTextualWord</code>.<br />
+          <strong>split_to_sections:</strong> Groups PDF content into sections
+          by bold headings.
+        </p>
+        <pre>
 1. Patient Name: John Doe the Second
 2. DOB: 02/02/1971
 3. Procedures
 4. Lab Results: Urine Color: Green, Blood Color: Blue, EKG Results Not Valid
 5. Radiology Results: None
-      </pre>
-    </section>
+      </pre
+        >
+      </section>
 
-    <!-- Conclusion -->
-    <section style="animation-delay: 0.4s;">
-      <h2>Conclusion</h2>
-      <p>
-        The code is provided as a Python package named <code>nym_assignment</code> with the main file <code>assignment_api.py</code>.
-      </p>
-    </section>
+      <!-- Conclusion -->
+      <section style="animation-delay: 0.4s">
+        <h2>Conclusion</h2>
+        <p>
+          The code is provided as a Python package named
+          <code>nym_assignment</code> with the main file
+          <code>assignment_api.py</code>.
+        </p>
+      </section>
+    </div>
 
-    <!-- Demo Section -->
-    <section id="demo" style="animation-delay: 0.5s;">
-      <h2>Demo</h2>
-      <p>Select a PDF and run the tasks:</p>
-      <select id="pdfSelect">
-        <option value="chart1.pdf">chart1.pdf</option>
-        <option value="chart2.pdf">chart2.pdf</option>
-        <option value="chart3.pdf">chart3.pdf</option>
-      </select>
-      <br/><br/>
-      <button id="btnPdfToDict" class="btn">Run pdf_to_dict</button>
-      <button id="btnPopulateChart" class="btn">Run populate_chart</button>
-      <button id="btnPdfToExtraDict" class="btn">Run pdf_to_extra_dict</button>
-      <div id="demoOutput"></div>
-    </section>
-  </div>
+    <footer>
+      <p>&copy; 2025 Nym Assignment Submission &bull; Candidate: [Bar Moshe]</p>
+    </footer>
 
-  <footer>
-    <p>&copy; 2025 Nym Assignment Submission &bull; Candidate: [Bar Moshe]</p>
-  </footer>
-
-  <script>
-    // Button bounce effect for GitHub button
-    const githubBtn = document.getElementById('githubBtn');
-    githubBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      githubBtn.classList.remove('wow');
-      void githubBtn.offsetWidth;
-      githubBtn.classList.add('wow');
-      setTimeout(() => {
-        window.open(githubBtn.href, '_blank');
-      }, 600);
-    });
-
-    // Configure pdf.js worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
-
-    // Utility: load a PDF and return the document
-    async function loadPDF(url) {
-      try {
-        const loadingTask = pdfjsLib.getDocument(url);
-        return await loadingTask.promise;
-      } catch (error) {
-        console.error('Error loading PDF:', error);
-        return null;
-      }
-    }
-
-    // Task: pdf_to_dict – simulate extracting TextualWord objects
-    async function pdfToDict(url) {
-      const pdfDoc = await loadPDF(url);
-      if (!pdfDoc) return {};
-      let result = {};
-      for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-        const page = await pdfDoc.getPage(pageNum);
-        const textContent = await page.getTextContent();
-        result[pageNum - 1] = textContent.items.map(item => ({
-          x0: item.transform[4],
-          x1: item.transform[4] + item.width,
-          text: item.str
-        }));
-      }
-      return result;
-    }
-
-    // Task: populate_chart – simulate building a Chart object
-    async function populateChart(url) {
-      // For demo purposes, use static values and a flag based on the filename.
-      const hasValidEKG = url.includes("chart1.pdf");
-      const chart = {
-        name: "John Doe The Second",
-        dob: "02/02/1971",
-        has_valid_ekg: hasValidEKG,
-        age: "52.00"
-      };
-      return chart;
-    }
-
-    // Task: pdf_to_extra_dict – simulate adding font details.
-    async function pdfToExtraDict(url) {
-      const baseDict = await pdfToDict(url);
-      // Add dummy font details. To simulate a mix, mark some items as non-bold.
-      let extraDict = {};
-      for (const [page, items] of Object.entries(baseDict)) {
-        extraDict[page] = items.map((item, idx) => ({
-          ...item,
-          // For simulation: mark the first item of each page as bold,
-          // and randomly mark others as bold or not.
-          fontname: idx === 0 || Math.random() > 0.5 ? "Helvetica-Bold" : "Helvetica",
-          size: 12,
-          is_bold: idx === 0 || Math.random() > 0.5
-        }));
-      }
-      return extraDict;
-    }
-
-    // Updated Task: split_to_sections – group items so that each new section starts with a bold item.
-    async function splitToSections(url) {
-      const extraDict = await pdfToExtraDict(url);
-      let allItems = [];
-      // Combine items from all pages into one array.
-      Object.values(extraDict).forEach(pageItems => {
-        allItems = allItems.concat(pageItems);
+    <script>
+      // Button bounce effect for GitHub button
+      const githubBtn = document.getElementById("githubBtn");
+      githubBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        githubBtn.classList.remove("wow");
+        void githubBtn.offsetWidth;
+        githubBtn.classList.add("wow");
+        setTimeout(() => {
+          window.open(githubBtn.href, "_blank");
+        }, 600);
       });
-      let sections = [];
-      let currentSection = [];
-      // Loop over all items and start a new section on a bold item.
-      for (const item of allItems) {
-        if (item.is_bold) {
-          // If there's an existing section, push it.
-          if (currentSection.length > 0) {
-            sections.push(currentSection);
-          }
-          // Start a new section with the bold item.
-          currentSection = [item];
-        } else {
-          // Append non-bold items to the current section.
-          if (currentSection.length === 0) {
-            // If no section has started yet, start one with the non-bold item.
-            currentSection = [item];
-          } else {
-            currentSection.push(item);
-          }
+
+      // Configure pdf.js worker
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js";
+
+      // Utility: load a PDF and return the document
+      async function loadPDF(url) {
+        try {
+          const loadingTask = pdfjsLib.getDocument(url);
+          return await loadingTask.promise;
+        } catch (error) {
+          console.error("Error loading PDF:", error);
+          return null;
         }
       }
-      if (currentSection.length > 0) {
-        sections.push(currentSection);
+
+      // Task: pdf_to_dict – simulate extracting TextualWord objects
+      async function pdfToDict(url) {
+        const pdfDoc = await loadPDF(url);
+        if (!pdfDoc) return {};
+        let result = {};
+        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+          const page = await pdfDoc.getPage(pageNum);
+          const textContent = await page.getTextContent();
+          result[pageNum - 1] = textContent.items.map((item) => ({
+            x0: item.transform[4],
+            x1: item.transform[4] + item.width,
+            text: item.str,
+          }));
+        }
+        return result;
       }
-      return sections;
-    }
 
-    // Utility: display output in the demoOutput div as formatted JSON
-    function displayOutput(output) {
-      const demoOutput = document.getElementById('demoOutput');
-      demoOutput.innerText = JSON.stringify(output, null, 2);
-    }
+      // Task: populate_chart – simulate building a Chart object
+      async function populateChart(url) {
+        // For demo purposes, use static values and a flag based on the filename.
+        const hasValidEKG = url.includes("chart1.pdf");
+        const chart = {
+          name: "John Doe The Second",
+          dob: "02/02/1971",
+          has_valid_ekg: hasValidEKG,
+          age: "52.00",
+        };
+        return chart;
+      }
 
-    // Add event listeners to demo buttons with bounce effect.
-    document.getElementById('btnPdfToDict').addEventListener('click', async function() {
-      this.classList.remove('wow');
-      void this.offsetWidth;
-      this.classList.add('wow');
-      const pdfUrl = document.getElementById('pdfSelect').value;
-      const output = await pdfToDict(pdfUrl);
-      displayOutput(output);
-    });
+      // Task: pdf_to_extra_dict – simulate adding font details.
+      async function pdfToExtraDict(url) {
+        const baseDict = await pdfToDict(url);
+        // Add dummy font details. To simulate a mix, mark some items as non-bold.
+        let extraDict = {};
+        for (const [page, items] of Object.entries(baseDict)) {
+          extraDict[page] = items.map((item, idx) => ({
+            ...item,
+            // For simulation: mark the first item of each page as bold,
+            // and randomly mark others as bold or not.
+            fontname:
+              idx === 0 || Math.random() > 0.5 ? "Helvetica-Bold" : "Helvetica",
+            size: 12,
+            is_bold: idx === 0 || Math.random() > 0.5,
+          }));
+        }
+        return extraDict;
+      }
 
-    document.getElementById('btnPopulateChart').addEventListener('click', async function() {
-      this.classList.remove('wow');
-      void this.offsetWidth;
-      this.classList.add('wow');
-      const pdfUrl = document.getElementById('pdfSelect').value;
-      const output = await populateChart(pdfUrl);
-      displayOutput(output);
-    });
+      // Updated Task: split_to_sections – group items so that each new section starts with a bold item.
+      async function splitToSections(url) {
+        const extraDict = await pdfToExtraDict(url);
+        let allItems = [];
+        // Combine items from all pages into one array.
+        Object.values(extraDict).forEach((pageItems) => {
+          allItems = allItems.concat(pageItems);
+        });
+        let sections = [];
+        let currentSection = [];
+        // Loop over all items and start a new section on a bold item.
+        for (const item of allItems) {
+          if (item.is_bold) {
+            // If there's an existing section, push it.
+            if (currentSection.length > 0) {
+              sections.push(currentSection);
+            }
+            // Start a new section with the bold item.
+            currentSection = [item];
+          } else {
+            // Append non-bold items to the current section.
+            if (currentSection.length === 0) {
+              // If no section has started yet, start one with the non-bold item.
+              currentSection = [item];
+            } else {
+              currentSection.push(item);
+            }
+          }
+        }
+        if (currentSection.length > 0) {
+          sections.push(currentSection);
+        }
+        return sections;
+      }
 
-    document.getElementById('btnPdfToExtraDict').addEventListener('click', async function() {
-      this.classList.remove('wow');
-      void this.offsetWidth;
-      this.classList.add('wow');
-      const pdfUrl = document.getElementById('pdfSelect').value;
-      const output = await pdfToExtraDict(pdfUrl);
-      displayOutput(output);
-    });
+      // Utility: display output in the demoOutput div as formatted JSON
+      function displayOutput(output) {
+        const demoOutput = document.getElementById("demoOutput");
+        demoOutput.innerText = JSON.stringify(output, null, 2);
+      }
 
-    document.getElementById('btnSplitToSections').addEventListener('click', async function() {
-      this.classList.remove('wow');
-      void this.offsetWidth;
-      this.classList.add('wow');
-      const pdfUrl = document.getElementById('pdfSelect').value;
-      const output = await splitToSections(pdfUrl);
-      displayOutput(output);
-    });
-  </script>
-</body>
+      // Add event listeners to demo buttons with bounce effect.
+      document
+        .getElementById("btnPdfToDict")
+        .addEventListener("click", async function () {
+          this.classList.remove("wow");
+          void this.offsetWidth;
+          this.classList.add("wow");
+          const pdfUrl = document.getElementById("pdfSelect").value;
+          const output = await pdfToDict(pdfUrl);
+          displayOutput(output);
+        });
+
+      document
+        .getElementById("btnPopulateChart")
+        .addEventListener("click", async function () {
+          this.classList.remove("wow");
+          void this.offsetWidth;
+          this.classList.add("wow");
+          const pdfUrl = document.getElementById("pdfSelect").value;
+          const output = await populateChart(pdfUrl);
+          displayOutput(output);
+        });
+
+      document
+        .getElementById("btnPdfToExtraDict")
+        .addEventListener("click", async function () {
+          this.classList.remove("wow");
+          void this.offsetWidth;
+          this.classList.add("wow");
+          const pdfUrl = document.getElementById("pdfSelect").value;
+          const output = await pdfToExtraDict(pdfUrl);
+          displayOutput(output);
+        });
+
+      document
+        .getElementById("btnSplitToSections")
+        .addEventListener("click", async function () {
+          this.classList.remove("wow");
+          void this.offsetWidth;
+          this.classList.add("wow");
+          const pdfUrl = document.getElementById("pdfSelect").value;
+          const output = await splitToSections(pdfUrl);
+          displayOutput(output);
+        });
+    </script>
+  </body>
 </html>
