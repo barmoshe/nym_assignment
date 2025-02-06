@@ -456,16 +456,7 @@
           displayOutput(output);
         });
 
-      document
-        .getElementById("btnSplitToSections")
-        .addEventListener("click", async function () {
-          this.classList.remove("wow");
-          void this.offsetWidth;
-          this.classList.add("wow");
-          const pdfUrl = document.getElementById("pdfSelect").value;
-          const output = await splitToSections(pdfUrl);
-          displayOutput(output);
-        });
+
     </script>
   </body>
 </html>
