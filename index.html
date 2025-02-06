@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>nym_assignment - PDF Parser</title>
+  <title>Nym Assignment Submission</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -21,12 +21,11 @@
     html, body {
       height: 100%;
       font-family: 'Montserrat', sans-serif;
-      background: #1E252F; /* Deep Charcoal background */
+      background: #1E252F;
       color: #ffffff;
       overflow-x: hidden;
-      line-height: 1.6; /* Global line-height for better readability */
+      line-height: 1.6;
     }
-
     /* Container */
     .container {
       max-width: 1200px;
@@ -35,7 +34,6 @@
       position: relative;
       z-index: 1;
     }
-
     /* Hero Section */
     .hero {
       position: relative;
@@ -72,8 +70,7 @@
       max-width: 600px;
       margin: 20px auto 40px;
     }
-
-    /* CTA Button with WOW effect on click */
+    /* Button */
     .btn {
       display: inline-block;
       background: #1E252F;
@@ -87,15 +84,13 @@
       overflow: hidden;
     }
     .btn:hover {
-      background: #3BA935; /* Subtle shift to green on hover */
+      background: #3BA935;
       transform: translateY(-3px);
     }
-    /* The "WOW" effect class toggled on click */
     .btn.wow {
       animation: wowEffect 0.6s ease forwards;
     }
-
-    /* Sections with fade-up animation */
+    /* Sections */
     section {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 8px;
@@ -118,13 +113,12 @@
     section ol {
       margin-bottom: 16px;
       font-weight: 300;
-      line-height: 1.8; /* Increased line-height for better readability */
+      line-height: 1.8;
     }
     section ul li,
     section ol li {
       margin-bottom: 6px;
     }
-
     /* Code blocks */
     pre, code {
       background: rgba(255, 255, 255, 0.1);
@@ -136,7 +130,6 @@
       display: block;
       line-height: 1.6;
     }
-
     /* Footer */
     footer {
       text-align: center;
@@ -145,136 +138,98 @@
       background: #2A313A;
       color: #FFFFFF;
     }
-
     /* Keyframe Animations */
-    /* Shifts the background gradient */
     @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-    /* Fade-up for sections */
     @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
-    /* WOW effect for the button */
     @keyframes wowEffect {
-      0% {
-        transform: translateY(0) scale(1);
-        background: #1E252F;
-      }
-      50% {
-        transform: scale(1.3) rotate(10deg);
-        background: #FFD700; /* Quick gold flash mid-flight */
-      }
-      100% {
-        transform: translateY(-4px) rotate(0deg);
-        background: #3BA935;
-      }
+      0% { transform: translateY(0) scale(1); background: #1E252F; }
+      50% { transform: scale(1.3) rotate(10deg); background: #FFD700; }
+      100% { transform: translateY(-4px) rotate(0deg); background: #3BA935; }
     }
-
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
-      .hero {
-        padding: 80px 10px 100px;
-      }
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      .hero p {
-        font-size: 1rem;
-        margin: 15px auto 30px;
-      }
-      .btn {
-        padding: 12px 30px;
-        font-size: 0.9rem;
-      }
-      .container {
-        padding: 0 10px 40px;
-      }
-      section {
-        padding: 20px;
-      }
-      section h2 {
-        font-size: 1.6rem;
-      }
+      .hero { padding: 80px 10px 100px; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; margin: 15px auto 30px; }
+      .btn { padding: 12px 30px; font-size: 0.9rem; }
+      .container { padding: 0 10px 40px; }
+      section { padding: 20px; }
+      section h2 { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Hero Section with Animated Gradient -->
+  <!-- Hero Section -->
   <div class="hero">
-    <h1>nym_assignment</h1>
-    <p>Advanced PDF Parser for Automated Medical Coding, built on the Nym Health approach.</p>
-    <a href="https://github.com/yourusername/nym_assignment" id="githubBtn" class="btn">Open GitHub</a>
+    <h1>Nym Assignment Submission</h1>
+    <p>PDF Parsing & Chart Population in Python</p>
+    <a href="https://github.com/yourusername/nym_assignment" id="githubBtn" class="btn">View on GitHub</a>
   </div>
 
   <div class="container">
+    <!-- Introduction -->
     <section style="animation-delay: 0.1s;">
-      <h2>Overview</h2>
-      <p>This repository uses <strong>pdfplumber</strong> to parse PDF documents for the Nym home assignment. It automates extracting patient details and includes the following tasks:</p>
-      <ul>
-        <li><strong>pdf_to_dict</strong>: Converts PDF pages to <code>TextualWord</code> objects.</li>
-        <li><strong>populate_chart</strong>: Extracts name, DOB, EKG status, and computes the patient’s age.</li>
-        <li><strong>pdf_to_extra_dict</strong>: Captures font info using <code>ExtraTextualWord</code>.</li>
-        <li><strong>split_to_sections</strong>: Groups data into sections based on bold titles.</li>
-      </ul>
+      <h2>Introduction</h2>
+      <p>
+        This package, <code>nym_assignment</code>, demonstrates PDF parsing and chart population using <code>pdfplumber</code>.
+      </p>
     </section>
 
+    <!-- Assignment -->
     <section style="animation-delay: 0.2s;">
-      <h2>Installation</h2>
-      <p>Requires Python 3.8+ and <em>pdfplumber</em>:</p>
-      <pre>pip install pdfplumber</pre>
-      <p>Then run:</p>
-      <pre>python assignment_api.py</pre>
+      <h2>Assignment</h2>
+      <p>
+        <strong>pdf_to_dict:</strong> Extracts <code>TextualWord</code> objects from PDFs.<br>
+        <strong>populate_chart:</strong> Builds a <code>Chart</code> object with patient info and calculates age.
+      </p>
+      <pre>
+{0: [TextualWord(x0=72.025, x1=95.928, text='First'), ...],
+ 1: [TextualWord(x0=72.025, x1=111.955, text='Second'), ...]}
+      </pre>
     </section>
 
+    <!-- Bonus -->
     <section style="animation-delay: 0.3s;">
-      <h2>Usage</h2>
-      <p>All core functions and classes are in <code>assignment_api.py</code>. PDF files:</p>
-      <ul>
-        <li><code>chart1.pdf</code></li>
-        <li><code>chart2.pdf</code></li>
-        <li><code>chart3.pdf</code></li>
-        <li><code>chart_example.pdf</code></li>
-      </ul>
-      <p>The program prints parsing results and demonstrates chart population and section splitting.</p>
+      <h2>Bonus</h2>
+      <p>
+        <strong>pdf_to_extra_dict:</strong> Extracts font details using <code>ExtraTextualWord</code>.<br>
+        <strong>split_to_sections:</strong> Groups PDF content into sections by bold headings.
+      </p>
+      <pre>
+1. Patient Name: John Doe the Second
+2. DOB: 02/02/1971
+3. Procedures
+...
+      </pre>
     </section>
 
+    <!-- Conclusion -->
     <section style="animation-delay: 0.4s;">
-      <h2>Code Explanation</h2>
-      <p>Core components:</p>
-      <ol>
-        <li><strong>pdf_to_dict</strong>: Basic word extraction.</li>
-        <li><strong>populate_chart</strong>: Builds a <code>Chart</code> (name, DOB, EKG, age).</li>
-        <li><strong>pdf_to_extra_dict</strong>: Enriched extraction into <code>ExtraTextualWord</code>.</li>
-        <li><strong>split_to_sections</strong>: Groups bold-based headings into logical sections.</li>
-      </ol>
+      <h2>Conclusion</h2>
+      <p>
+        The code is provided as a Python package named <code>nym_assignment</code> with the main file <code>assignment_api.py</code>.
+      </p>
     </section>
   </div>
 
   <footer>
-    <p>&copy; 2025 Nym Assignment &bull; Merging Healthcare & Technology</p>
+    <p>&copy; 2025 Nym Assignment Submission &bull; Candidate: [Your Name]</p>
   </footer>
 
   <script>
-    // WOW effect on GitHub button click
+    // Button animation
     const githubBtn = document.getElementById('githubBtn');
     githubBtn.addEventListener('click', (event) => {
       event.preventDefault();
-      githubBtn.classList.remove('wow'); // reset if already clicked
-      void githubBtn.offsetWidth;         // force DOM reflow to restart animation
+      githubBtn.classList.remove('wow');
+      void githubBtn.offsetWidth;
       githubBtn.classList.add('wow');
-      // Open link after animation
       setTimeout(() => {
         window.open(githubBtn.href, '_blank');
       }, 600);
