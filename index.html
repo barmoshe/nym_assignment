@@ -7,10 +7,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet" />
+  <!-- pdf.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
   <style>
     /* Base & Reset */
     * {
@@ -82,6 +81,7 @@
       position: relative;
       transition: transform 0.3s ease, background 0.3s ease;
       overflow: hidden;
+      margin: 5px;
     }
     .btn:hover {
       background: #3BA935;
@@ -130,6 +130,15 @@
       display: block;
       line-height: 1.6;
     }
+    /* Demo Output Box */
+    #demoOutput {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
     /* Footer */
     footer {
       text-align: center;
@@ -177,7 +186,7 @@
     <section style="animation-delay: 0.1s;">
       <h2>Introduction</h2>
       <p>
-        This package, <code>nym_assignment</code>, demonstrates PDF parsing and chart population using <code>pdfplumber</code>.
+        This package, <code>nym_assignment</code>, demonstrates PDF parsing and chart population using concepts from Python's <code>pdfplumber</code>.
       </p>
     </section>
 
@@ -205,7 +214,8 @@
 1. Patient Name: John Doe the Second
 2. DOB: 02/02/1971
 3. Procedures
-...
+4. Lab Results: Urine Color: Green, Blood Color: Blue, EKG Results Not Valid
+5. Radiology Results: None
       </pre>
     </section>
 
@@ -216,6 +226,22 @@
         The code is provided as a Python package named <code>nym_assignment</code> with the main file <code>assignment_api.py</code>.
       </p>
     </section>
+
+    <!-- Demo Section -->
+    <section id="demo" style="animation-delay: 0.5s;">
+      <h2>Demo</h2>
+      <p>Select a PDF and run the tasks:</p>
+      <select id="pdfSelect">
+        <option value="chart1.pdf">chart1.pdf</option>
+        <option value="chart2.pdf">chart2.pdf</option>
+        <option value="chart3.pdf">chart3.pdf</option>
+      </select>
+      <br/><br/>
+      <button id="btnPdfToDict" class="btn">Run pdf_to_dict</button>
+      <button id="btnPopulateChart" class="btn">Run populate_chart</button>
+      <button id="btnPdfToExtraDict" class="btn">Run pdf_to_extra_dict</button>
+      <div id="demoOutput"></div>
+    </section>
   </div>
 
   <footer>
@@ -223,7 +249,7 @@
   </footer>
 
   <script>
-    // Button animation
+    // Button bounce effect for GitHub button
     const githubBtn = document.getElementById('githubBtn');
     githubBtn.addEventListener('click', (event) => {
       event.preventDefault();
@@ -233,6 +259,146 @@
       setTimeout(() => {
         window.open(githubBtn.href, '_blank');
       }, 600);
+    });
+
+    // Configure pdf.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+
+    // Utility: load a PDF and return the document
+    async function loadPDF(url) {
+      try {
+        const loadingTask = pdfjsLib.getDocument(url);
+        return await loadingTask.promise;
+      } catch (error) {
+        console.error('Error loading PDF:', error);
+        return null;
+      }
+    }
+
+    // Task: pdf_to_dict – simulate extracting TextualWord objects
+    async function pdfToDict(url) {
+      const pdfDoc = await loadPDF(url);
+      if (!pdfDoc) return {};
+      let result = {};
+      for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+        const page = await pdfDoc.getPage(pageNum);
+        const textContent = await page.getTextContent();
+        result[pageNum - 1] = textContent.items.map(item => ({
+          x0: item.transform[4],
+          x1: item.transform[4] + item.width,
+          text: item.str
+        }));
+      }
+      return result;
+    }
+
+    // Task: populate_chart – simulate building a Chart object
+    async function populateChart(url) {
+      // For demo purposes, use static values and a flag based on the filename.
+      const hasValidEKG = url.includes("chart1.pdf");
+      const chart = {
+        name: "John Doe The Second",
+        dob: "02/02/1971",
+        has_valid_ekg: hasValidEKG,
+        age: "52.00"
+      };
+      return chart;
+    }
+
+    // Task: pdf_to_extra_dict – simulate adding font details.
+    async function pdfToExtraDict(url) {
+      const baseDict = await pdfToDict(url);
+      // Add dummy font details. To simulate a mix, mark some items as non-bold.
+      let extraDict = {};
+      for (const [page, items] of Object.entries(baseDict)) {
+        extraDict[page] = items.map((item, idx) => ({
+          ...item,
+          // For simulation: mark the first item of each page as bold,
+          // and randomly mark others as bold or not.
+          fontname: idx === 0 || Math.random() > 0.5 ? "Helvetica-Bold" : "Helvetica",
+          size: 12,
+          is_bold: idx === 0 || Math.random() > 0.5
+        }));
+      }
+      return extraDict;
+    }
+
+    // Updated Task: split_to_sections – group items so that each new section starts with a bold item.
+    async function splitToSections(url) {
+      const extraDict = await pdfToExtraDict(url);
+      let allItems = [];
+      // Combine items from all pages into one array.
+      Object.values(extraDict).forEach(pageItems => {
+        allItems = allItems.concat(pageItems);
+      });
+      let sections = [];
+      let currentSection = [];
+      // Loop over all items and start a new section on a bold item.
+      for (const item of allItems) {
+        if (item.is_bold) {
+          // If there's an existing section, push it.
+          if (currentSection.length > 0) {
+            sections.push(currentSection);
+          }
+          // Start a new section with the bold item.
+          currentSection = [item];
+        } else {
+          // Append non-bold items to the current section.
+          if (currentSection.length === 0) {
+            // If no section has started yet, start one with the non-bold item.
+            currentSection = [item];
+          } else {
+            currentSection.push(item);
+          }
+        }
+      }
+      if (currentSection.length > 0) {
+        sections.push(currentSection);
+      }
+      return sections;
+    }
+
+    // Utility: display output in the demoOutput div as formatted JSON
+    function displayOutput(output) {
+      const demoOutput = document.getElementById('demoOutput');
+      demoOutput.innerText = JSON.stringify(output, null, 2);
+    }
+
+    // Add event listeners to demo buttons with bounce effect.
+    document.getElementById('btnPdfToDict').addEventListener('click', async function() {
+      this.classList.remove('wow');
+      void this.offsetWidth;
+      this.classList.add('wow');
+      const pdfUrl = document.getElementById('pdfSelect').value;
+      const output = await pdfToDict(pdfUrl);
+      displayOutput(output);
+    });
+
+    document.getElementById('btnPopulateChart').addEventListener('click', async function() {
+      this.classList.remove('wow');
+      void this.offsetWidth;
+      this.classList.add('wow');
+      const pdfUrl = document.getElementById('pdfSelect').value;
+      const output = await populateChart(pdfUrl);
+      displayOutput(output);
+    });
+
+    document.getElementById('btnPdfToExtraDict').addEventListener('click', async function() {
+      this.classList.remove('wow');
+      void this.offsetWidth;
+      this.classList.add('wow');
+      const pdfUrl = document.getElementById('pdfSelect').value;
+      const output = await pdfToExtraDict(pdfUrl);
+      displayOutput(output);
+    });
+
+    document.getElementById('btnSplitToSections').addEventListener('click', async function() {
+      this.classList.remove('wow');
+      void this.offsetWidth;
+      this.classList.add('wow');
+      const pdfUrl = document.getElementById('pdfSelect').value;
+      const output = await splitToSections(pdfUrl);
+      displayOutput(output);
     });
   </script>
 </body>
